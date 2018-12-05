@@ -21,29 +21,36 @@
         <property name="password" value="${db.password}"/>
     </bean>
 
-    <!-- 2.创建SessionFactory -->
-    <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+    <!--2.Spring整合JPA-->
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <!-- 数据源 -->
         <property name="dataSource" ref="dataSource"/>
-        <property name="hibernateProperties">
-            <props>
-                <prop key="hibernate.show_sql">true</prop>
-                <prop key="hibernate.format_sql">true</prop>
-                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL8Dialect</prop>
-            </props>
+        <!--ORM提供商（适配）：hibernate-->
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+                <!--显示Sql语句-->
+                <property name="showSql" value="true"/>
+                <!--是否生成表-->
+                <!--<property name="generateDdl" value="true"/>-->
+                <!--数据库方言-->
+                <property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect"/>
+                <!--数据库类型-->
+                <property name="database" value="MYSQL"/>
+            </bean>
         </property>
-        <!-- JPA注解 -->
+        <!--注解扫描包-->
         <property name="packagesToScan">
-            <array>
+            <list>
                 <value>com.bos.entity</value>
-            </array>
+            </list>
         </property>
     </bean>
 
     <!-- 3.1 开启事务注解 -->
     <tx:annotation-driven/>
-    <!-- 3.2 事务管理器 -->
-    <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
-        <property name="sessionFactory" ref="sessionFactory"/>
+    <!-- 3.2 JPA的事务管理器 -->
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
     </bean>
 
     <!-- 4.开启IOC注解 -->

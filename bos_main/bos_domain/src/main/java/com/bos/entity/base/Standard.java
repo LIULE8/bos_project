@@ -26,18 +26,18 @@ public class Standard implements Serializable {
     private String standardName;
 
     @Column(name = "MIN_WEIGHT", columnDefinition = "收派标准最小重量")
-    private Double minWeight;
+    private Long minWeight;
 
     @Column(name = "MAX_WEIGHT", columnDefinition = "收派标准最大重量")
-    private Double maxWeight;
+    private Long maxWeight;
 
     @Column(name = "MIN_LENGTH", columnDefinition = "收派标准最小长度")
-    private Double minLength;
+    private Long minLength;
 
     @Column(name = "MAX_LENGTH", columnDefinition = "收派标准最大长度")
-    private Double maxLength;
+    private Long maxLength;
 
-    @OneToMany(targetEntity = Courier.class, fetch = FetchType.LAZY, mappedBy = "standard")
+    @OneToMany(targetEntity = Courier.class, fetch = FetchType.EAGER, mappedBy = "standard")
     private List<Courier> courierList;
 
 }

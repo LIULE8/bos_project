@@ -43,6 +43,6 @@ public class Area implements Serializable {
     @Column(name = "SHORTCODE", columnDefinition = "区域简码")
     private String shortCode;
 
-    @OneToMany(targetEntity = SubArea.class, fetch = FetchType.LAZY, mappedBy = "area",cascade = CascadeType.PERSIST)
+    @OneToMany(targetEntity = SubArea.class, fetch = FetchType.EAGER, mappedBy = "area",cascade = CascadeType.PERSIST)
     private List<SubArea> subAreaList;
 }

@@ -32,6 +32,6 @@ public class FixedArea implements Serializable {
     @ManyToOne(targetEntity = Courier.class, fetch = FetchType.LAZY, optional = false, cascade = CascadeType.PERSIST)
     private Courier fixedAreaLeader;
 
-    @OneToMany(targetEntity = SubArea.class, fetch = FetchType.LAZY, mappedBy = "fixedArea",cascade = CascadeType.PERSIST)
+    @OneToMany(targetEntity = SubArea.class, fetch = FetchType.EAGER, mappedBy = "fixedArea",cascade = CascadeType.PERSIST)
     private List<SubArea> subAreaList;
 }
